@@ -1,0 +1,187 @@
+openapi: 3.0.1
+info:
+  title: Github repositories API
+  version: '1.0'
+servers:
+  - url: http://localhost:3000
+paths:
+  /:
+    get:
+      tags:
+        - 'Root'
+      description: Just a healthcheck
+      responses:
+        '200':
+          description: Object with status and message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: OK
+      servers:
+        - url: http://localhost:3000
+    servers:
+      - url: http://localhost:3000
+  /repositories/{userName}:
+    get:
+      tags:
+        - 'Get repositories'
+      description: Gets repositories for specific user
+      parameters:
+        - name: userName
+          in: path
+          description: github user name
+          required: true
+          example: defunkt
+          schema:
+            type: string
+        - name: pages
+          in: query
+          description: amount of pages (each of 100 elements)
+          required: false
+          example: 5
+          schema:
+            type: string
+        - name: Accept
+          in: header
+          description: accept header
+          required: true
+          schema:
+            type: string
+            enum:
+              - application/json
+      responses:
+        '200':
+          description: Succesful request, eturns an array of public user repositories
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/Response_200'
+                  - $ref: '#/components/schemas/Response_403'
+              examples:
+                sample1:
+                  description: Case when branches data available
+                  value:
+                    login: defunkt
+                    name: ace
+                    branches:
+                      - name: dont-hardcode-fonts-protocol
+                        sha: f1b0c0859bb10f557caa18cdd02afda482fc558a
+                sample2:
+                  description: Case when branches data is forbidden
+                  value:
+                    login: defunkt
+                    name: ace
+                    branches:
+                      - status: 403
+                        Message: Forbidden
+        '400':
+          description: Request failed because of application/json Accept header is absent
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response_400'
+              example:
+                status: 406
+                Message: Missing application/json Accept header
+        '404':
+          description: Request failed because of github user not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response_404'
+              example:
+                status: 406
+                Message: User not found
+        '406':
+          description: Request failed because of unacceptable application/xml Accept header
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response_406'
+              example:
+                status: 406
+                Message: application/xml Accept header is not acceptable
+    servers:
+      - url: http://localhost:3000
+
+components:
+  schemas:
+    Response_200:
+      type: array
+      items:
+        type: object
+        properties:
+          login:
+            type: string
+            example: defunkt
+          name:
+            type: string
+            example: ace
+          branches:
+            type: array
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: dont-hardcode-fonts-protocol
+                sha:
+                  type: string
+                  example: f1b0c0859bb10f557caa18cdd02afda482fc558a
+    Response_400:
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 400
+        Message:
+          type: string
+          example: Header missing
+    Response_403:
+      type: array
+      items:
+        type: object
+        properties:
+          login:
+            type: string
+            example: defunkt
+          name:
+            type: string
+            example: ace
+          branches:
+            type: array
+            items:
+              type: object
+              properties:
+                status:
+                  type: number
+                  example: 403
+                Message:
+                  type: string
+                  example: Forbidden
+    Response_404:
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 404
+        Message:
+          type: string
+          example: User not found
+    Response_406:
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 406
+        Message:
+          type: string
+          example: Wrong header
