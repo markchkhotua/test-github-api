@@ -27,7 +27,7 @@ app.use((req: Request, res: Response, next: NextFunction) => next(createError(40
 
 app.use((err: HttpError | APIError, req: Request, res: Response, next: NextFunction) => {
     if(err instanceof APIError) {
-        return res.status(err.status).json(err.getResponseObject());
+        return res.status(err.status).send(err.getResponseObject());
     }
     res.status(err.status || 500);
     res.json({ status: res.status, Message: err.message });

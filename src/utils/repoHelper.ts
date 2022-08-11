@@ -22,4 +22,4 @@ const getBranchesPromise: GetBranchesPromiseFunction = async ({ name, owner: { l
     }
 };
 
-export { getBranchesPromises };
+export { getBranchesPromises, getBranchesPromise };

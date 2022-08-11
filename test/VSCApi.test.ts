@@ -1,9 +1,26 @@
 import request from 'supertest';
 import app from '../src/app';
 import { HttpCodes } from '../src/enums';
+import GithubAPIService from '../src/services/GithubAPIService';
+import APIError from '../src/errors/APIError';
 
-const testValidUser = 'defunkt';
-const testInvalidUser = 'defunkttttt';
+const mockRepos = [
+    {
+        name: 'acts_as_textiled',
+        owner: {
+            login: 'defunkt',
+        },
+        fork: false
+    }
+];
+const mockBranches = [
+    {
+        name: 'master',
+        commit: {
+            sha: 'fce0e1f58f01403568bee122a256cfab1adc6b5b',
+        },
+    }
+];
 
 describe('Testing status route', () => {
     it('should return 200 and OK message', async () => {
@@ -13,42 +30,97 @@ describe('Testing status route', () => {
     });
 });
 
-describe('Testing repositories route', () => {
-    
-    it('should return 200 and resulting array', async () => {
+describe('Testing OK response', () => {
+    beforeEach(() => {
+        jest.spyOn(GithubAPIService.getInstance(), 'getRepositoriesData')
+            .mockImplementation(() => new Promise((resolve) => resolve(mockRepos)));
+        jest.spyOn(GithubAPIService.getInstance(), 'getBranchesData')
+            .mockImplementation(() => new Promise((resolve) => resolve(mockBranches)));
+    });
+
+    it('Users - should return 200 and resulting array', async () => {
         const response = await request(app)
-            .get(`/repositories/${ testValidUser }`)
+            .get('/repositories/users/asdfghjkl')
             .set('Accept', 'application/json');
         expect(response.statusCode).toBe(HttpCodes.OK);
         expect(Array.isArray(response.body)).toBe(true);
     });
-
-    it('should return 404 if user does not exist', async () => {
+    it('Organizations - should return 200 and resulting array', async () => {
         const response = await request(app)
-            .get(`/repositories/${ testInvalidUser }`)
+            .get('/repositories/orgs/zxcvbnm')
+            .set('Accept', 'application/json');
+        expect(response.statusCode).toBe(HttpCodes.OK);
+        expect(Array.isArray(response.body)).toBe(true);
+    });
+});
+
+describe('Testing 404 response', () => {
+
+    beforeEach(() => {
+        jest.spyOn(GithubAPIService.getInstance(), 'getRepositoriesData')
+            .mockImplementation(() => new Promise((resolve, reject) => {
+                reject(new APIError('Not Found', 404));
+            }));
+    });
+
+    it('Users - should return 404 if user does not exist', async () => {
+        const response = await request(app)
+            .get('/repositories/users/aaazzzxxx')
             .set('Accept', 'application/json');
         expect(response.statusCode).toBe(HttpCodes.NOT_FOUND);
         expect(response.body.status).toEqual(HttpCodes.NOT_FOUND);
         expect(response.body.Message).toEqual('Not Found');
     });
-
-    it('should return 400 if Accept header don\'t include application/json', async () => {
+    it('Organizations - should return 404 if organization does not exist', async () => {
         const response = await request(app)
-            .get(`/repositories/${ testValidUser }`);
+            .get('/repositories/orgs/aaazzzxxx')
+            .set('Accept', 'application/json');
+        expect(response.statusCode).toBe(HttpCodes.NOT_FOUND);
+        expect(response.body.status).toEqual(HttpCodes.NOT_FOUND);
+        expect(response.body.Message).toEqual('Not Found');
+    });
+    
+});
+
+describe('Testing 400 response', () => {
+
+    it('Users - should return 400 if Accept header don\'t include application/json', async () => {
+        const response = await request(app)
+            .get('/repositories/users/aaazzzxxx');
         expect(response.statusCode).toBe(HttpCodes.BAD_REQUEST);
-        expect(typeof response.body).toBe('object');
         expect(response.body.status).toEqual(HttpCodes.BAD_REQUEST);
         expect(response.body.Message).toEqual('Missing application/json Accept header');
     });
-   
-    it('should return 406 if Accept header includes application/xml', async () => {
+    it('Organizations should return 400 if Accept header don\'t include application/json', async () => {
         const response = await request(app)
-            .get(`/repositories/${ testValidUser }`)
+            .get('/repositories/orgs/aaazzzxxx');
+        expect(response.statusCode).toBe(HttpCodes.BAD_REQUEST);
+        expect(response.body.status).toEqual(HttpCodes.BAD_REQUEST);
+        expect(response.body.Message).toEqual('Missing application/json Accept header');
+    });
+
+});
+
+describe('Testing 406 response', () => {
+
+    it('Users should return 406 if Accept header includes application/xml', async () => {
+        const response = await request(app)
+            .get('/repositories/users/asdfghjkl')
             .set('Accept', 'application/xml');
         expect(response.statusCode).toBe(HttpCodes.NOT_ACCEPTABLE);
         expect(typeof response.body).toBe('object');
         expect(response.body.status).toEqual(HttpCodes.NOT_ACCEPTABLE);
         expect(response.body.Message).toEqual('application/xml Accept header is not acceptable');
     });
-    
+
+    it('Organizations should return 406 if Accept header includes application/xml', async () => {
+        const response = await request(app)
+            .get('/repositories/orgs/asdfghjkl')
+            .set('Accept', 'application/xml');
+        expect(response.statusCode).toBe(HttpCodes.NOT_ACCEPTABLE);
+        expect(typeof response.body).toBe('object');
+        expect(response.body.status).toEqual(HttpCodes.NOT_ACCEPTABLE);
+        expect(response.body.Message).toEqual('application/xml Accept header is not acceptable');
+    });
+
 });

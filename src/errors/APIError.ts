@@ -14,7 +14,7 @@ class APIError extends Error {
         return this._errorCode;
     }
 
-    getResponseObject = () => ({ status: this.status, Message: this.message });
+    getResponseObject = () => ({ status: this._errorCode, Message: this.message });
 }
 
 export default APIError;
