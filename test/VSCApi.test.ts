@@ -3,24 +3,7 @@ import app from '../src/app';
 import { HttpCodes } from '../src/enums';
 import GithubAPIService from '../src/services/GithubAPIService';
 import APIError from '../src/errors/APIError';
-
-const mockRepos = [
-    {
-        name: 'acts_as_textiled',
-        owner: {
-            login: 'defunkt',
-        },
-        fork: false
-    }
-];
-const mockBranches = [
-    {
-        name: 'master',
-        commit: {
-            sha: 'fce0e1f58f01403568bee122a256cfab1adc6b5b',
-        },
-    }
-];
+import { repos, branches } from './mocks';
 
 describe('Testing status route', () => {
     it('should return 200 and OK message', async () => {
@@ -33,9 +16,9 @@ describe('Testing status route', () => {
 describe('Testing OK response', () => {
     beforeEach(() => {
         jest.spyOn(GithubAPIService.getInstance(), 'getRepositoriesData')
-            .mockImplementation(() => new Promise((resolve) => resolve(mockRepos)));
+            .mockImplementation(() => new Promise((resolve) => resolve(repos)));
         jest.spyOn(GithubAPIService.getInstance(), 'getBranchesData')
-            .mockImplementation(() => new Promise((resolve) => resolve(mockBranches)));
+            .mockImplementation(() => new Promise((resolve) => resolve(branches)));
     });
 
     it('Users - should return 200 and resulting array', async () => {

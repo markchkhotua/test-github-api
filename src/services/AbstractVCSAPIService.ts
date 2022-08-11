@@ -9,7 +9,9 @@ abstract class AbstractVCSAPIService {
 
     protected constructor(baseURL: string = '') {
         this.client = axios.create({ baseURL });
-        this.client.defaults.headers.common['Authorization'] = `token ${ config.accessToken }`;
+        if(config.accessToken) {
+            this.client.defaults.headers.common['Authorization'] = `token ${ config.accessToken }`;
+        }
         this.client.defaults.headers.common['Accept'] = 'application/vnd.github+json';
     }
     
