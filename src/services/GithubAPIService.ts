@@ -17,15 +17,15 @@ class GithubAPIService extends AbstractVCSAPIService implements IGithubAPIServic
         return this._instance;
     }
 
-    getRepositoriesData = async (userName: string, page: number = 1) =>
+    getRepositoriesData = async (entityName: string, entityType: string, page: number = 1) =>
         await this.getVCSData(
-            { userName, page },
+            { entityName, entityType, page },
             githubUrlBuilder.getReposUrl
         );
 
-    getBranchesData = async(userName: string, repoName: string) =>
+    getBranchesData = async(entityName: string, repoName: string) =>
         await this.getVCSData(
-            { userName, repoName },
+            { entityName, repoName },
             githubUrlBuilder.getBranchesUrl
         );
 }

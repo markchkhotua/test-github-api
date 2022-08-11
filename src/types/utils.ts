@@ -1,15 +1,10 @@
-import { Request } from 'express';
+import { Repo, ReposList, ResultingRepo, RepoInput, BranchesInput } from './data';
 
 export type UrlBuilder = {
-    [key: string]: UrlBuilderMethod
+    getReposUrl: (repoInput: RepoInput) => string
+    getBranchesUrl: (branchesInput: BranchesInput) => string
 }
 
-export type UrlBuilderMethod =  (data: UrlBuilderInput) => string
+export type GetBranchesPromiseFunction = (repo: Repo) => Promise<ResultingRepo>
 
-export type UrlBuilderInput = {
-    [key: string]: string | number
-}
-
-export interface ExtendedRequest extends Request {
-    swaggerDoc?: object
-}
+export type GetBranchesPromisesFunction = (repos: ReposList) => Array<Promise<ResultingRepo>>

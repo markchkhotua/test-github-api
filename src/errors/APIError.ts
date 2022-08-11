@@ -10,7 +10,7 @@ class APIError extends Error {
         Object.setPrototypeOf(this, APIError.prototype);
     }
 
-    get status (): number {
+    get status(): number {
         return this._errorCode;
     }
 

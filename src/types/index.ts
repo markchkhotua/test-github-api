@@ -6,12 +6,8 @@ export type IAppConfig = {
     };
 }
 
-export type Routes = {
-    root: string,
-    repositories: string,
-}
-
 export * from './data';
 export * from './utils';
 export * from './services';
+export * from './middlewares';
 

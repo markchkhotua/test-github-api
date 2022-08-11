@@ -1,6 +1,7 @@
-import { Request, Response } from 'express';
+import { RequestHandler } from 'express';
 import { repositoriesController } from './github';
 
-export default (req: Request, res: Response) => res.status(200).send({ status: 200, Message: 'OK' });
+const defaultHandler: RequestHandler = (req, res) => res.status(200).send({ status: 200, Message: 'OK' });
 
+export default defaultHandler;
 export { repositoriesController };

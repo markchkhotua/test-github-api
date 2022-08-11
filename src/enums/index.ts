@@ -5,3 +5,8 @@ export enum HttpCodes {
     NOT_ACCEPTABLE = 406,
     SERVER_ERROR = 500
 }
+
+export enum VCSEntityType {
+    users = 'users',
+    orgs = 'orgs'
+}

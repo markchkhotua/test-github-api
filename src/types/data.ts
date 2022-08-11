@@ -8,14 +8,26 @@ export type Repo = {
     fork?: boolean
 }
 
-export type RepoInput = {
-    userName: string,
-    page: number
-}
-
 export type Branch = {
     name: string,
     commit: {
         sha: string
     }
+}
+
+export type ResultingRepo = {
+    login: string,
+    name: string,
+    branches: Array<Branch>
+}
+
+export type RepoInput = {
+    entityName: string,
+    entityType: string,
+    page: number
+}
+
+export type BranchesInput = {
+    entityName: string,
+    repoName: string
 }
