@@ -21,7 +21,7 @@ export type ResultingRepo = {
     branches: Array<Branch>
 }
 
-export type RepoInput = {
+export type ReposInput = {
     entityName: string,
     entityType: string,
     page: number

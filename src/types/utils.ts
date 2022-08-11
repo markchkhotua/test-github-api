@@ -1,7 +1,7 @@
-import { Repo, ReposList, ResultingRepo, RepoInput, BranchesInput } from './data';
+import { Repo, ReposList, ResultingRepo, ReposInput, BranchesInput } from './data';
 
 export type UrlBuilder = {
-    getReposUrl: (repoInput: RepoInput) => string
+    getReposUrl: (repoInput: ReposInput) => string
     getBranchesUrl: (branchesInput: BranchesInput) => string
 }
 

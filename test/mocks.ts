@@ -1,4 +1,4 @@
-import { Branch } from '../src/types';
+import { Branch, BranchesInput, ReposInput } from '../src/types';
 
 type MockBranches = {
     [key: string]: Array<Branch>
@@ -41,4 +41,15 @@ const accessibleBranch: MockBranches = {
     ]
 };
 
-export { repos, repo, branches, accessibleBranch };
+const repoInput: ReposInput = {
+    entityName: 'test_user',
+    entityType: 'user',
+    page: 1
+};
+
+const branchInput: BranchesInput = {
+    entityName: 'test_user',
+    repoName: 'test_repo'
+};
+
+export { repos, repo, repoInput, branches, branchInput, accessibleBranch };
