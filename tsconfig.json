@@ -16,4 +16,8 @@
     "index.ts",
     "swagger.yaml"
   ],
+  "typeRoots": [
+    "./src/types",
+    "./node_modules/@types"
+  ]
 }

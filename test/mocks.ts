@@ -48,7 +48,7 @@ const repoInput: ReposInput = {
 };
 
 const branchInput: BranchesInput = {
-    entityName: 'test_user',
+    login: 'test_user',
     repoName: 'test_repo'
 };
 

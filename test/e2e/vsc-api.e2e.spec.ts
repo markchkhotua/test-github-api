@@ -1,9 +1,9 @@
 import request from 'supertest';
-import app from '../src/app';
-import { HttpCodes } from '../src/enums';
-import GithubAPIService from '../src/services/GithubAPIService';
-import APIError from '../src/errors/APIError';
-import { repos, branches } from './mocks';
+import app from '../../src/app';
+import { HttpCodes } from '../../src/enums';
+import GithubApiService from '../../src/services/github-api-service';
+import { ApiError } from '../../src/errors';
+import { repos, branches } from '../mocks';
 
 describe('Testing status route', () => {
     it('should return 200 and OK message', async () => {
@@ -15,9 +15,9 @@ describe('Testing status route', () => {
 
 describe('Testing OK response', () => {
     beforeEach(() => {
-        jest.spyOn(GithubAPIService.getInstance(), 'getRepositoriesData')
+        jest.spyOn(GithubApiService.getInstance(), 'getRepositoriesData')
             .mockImplementation(() => new Promise((resolve) => resolve(repos)));
-        jest.spyOn(GithubAPIService.getInstance(), 'getBranchesData')
+        jest.spyOn(GithubApiService.getInstance(), 'getBranchesData')
             .mockImplementation(() => new Promise((resolve) => resolve(branches)));
     });
 
@@ -40,9 +40,9 @@ describe('Testing OK response', () => {
 describe('Testing 404 response', () => {
 
     beforeEach(() => {
-        jest.spyOn(GithubAPIService.getInstance(), 'getRepositoriesData')
+        jest.spyOn(GithubApiService.getInstance(), 'getRepositoriesData')
             .mockImplementation(() => new Promise((resolve, reject) => {
-                reject(new APIError('Not Found', 404));
+                reject(new ApiError('Not Found', 404));
             }));
     });
 

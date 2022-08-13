@@ -6,8 +6,9 @@ export type IAppConfig = {
     };
 }
 
-export * from './data';
-export * from './utils';
-export * from './services';
-export * from './middlewares';
+export * from './data.types';
+export * from './utils.types';
+export * from './services.types';
+export * from './middlewares.types';
+export * from './controllers.types';
 

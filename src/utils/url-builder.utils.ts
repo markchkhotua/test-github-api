@@ -1,8 +1,8 @@
-import { UrlBuilder } from '../types';
+import type { UrlBuilder } from '../types';
 
 export const githubUrlBuilder: UrlBuilder = {
     getReposUrl: ({ entityName, entityType, page }) =>
         `/${ entityType }/${ entityName }/repos?per_page=100&page=${ page }`,
-    getBranchesUrl: ({ entityName, repoName }) => 
-        `/repos/${ entityName }/${ repoName }/branches`,
+    getBranchesUrl: ({ login, name }) =>
+        `/repos/${ login }/${ name }/branches`,
 };

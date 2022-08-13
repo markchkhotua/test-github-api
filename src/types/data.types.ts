@@ -1,4 +1,6 @@
 export type ReposList = Array<Repo>
+export type BranchesList = Array<Branch>
+export type ResultingRepos = Array<ResultingRepo>;
 
 export type Repo = {
     name: string,
@@ -18,16 +20,16 @@ export type Branch = {
 export type ResultingRepo = {
     login: string,
     name: string,
-    branches: Array<Branch>
+    branches: BranchesList
 }
 
 export type ReposInput = {
     entityName: string,
     entityType: string,
-    page: number
+    page: string
 }
 
 export type BranchesInput = {
-    entityName: string,
-    repoName: string
+    login: string,
+    name: string
 }

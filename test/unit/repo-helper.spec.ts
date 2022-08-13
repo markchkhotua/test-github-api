@@ -1,11 +1,11 @@
-import GithubAPIService from '../src/services/GithubAPIService';
-import { getBranchesPromise } from '../src/utils/repoHelper';
-import { accessibleBranch, repo } from './mocks';
+import GithubApiService from '../../src/services/github-api-service';
+import { getBranchesPromise } from '../../src/utils/repo-helper.utils';
+import { accessibleBranch, repo } from '../mocks';
 
 describe('Testing branches', () => {
 
     beforeEach(() => {
-        jest.spyOn(GithubAPIService.getInstance(), 'getBranchesData')
+        jest.spyOn(GithubApiService.getInstance(), 'getBranchesData')
             .mockImplementation((login, name: string) =>
                 new Promise((resolve, reject) => accessibleBranch[name] ? resolve(accessibleBranch[name]) : reject(new Error())));
     });

@@ -1,13 +1,13 @@
-import { Branch, GetBranchesPromiseFunction, GetBranchesPromisesFunction } from '../types';
-import GithubAPIService from '../services/GithubAPIService';
+import type { Branch, GetBranchesPromiseFunction, GetBranchesPromisesFunction } from '../types';
+import GithubApiService from '../services/github-api-service';
 
 const getBranchesPromises: GetBranchesPromisesFunction = (repos) =>
     repos.map(repo => getBranchesPromise(repo));
 
 const getBranchesPromise: GetBranchesPromiseFunction = async ({ name, owner: { login } }) => {
-    const githubAPIService = GithubAPIService.getInstance();
+    const githubAPIService = GithubApiService.getInstance();
     try {
-        const data = await githubAPIService.getBranchesData(login, name);
+        const data = await githubAPIService.getBranchesData({ login, name });
         return {
             login,
             name,

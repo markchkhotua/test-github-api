@@ -10,3 +10,4 @@ export enum VCSEntityType {
     users = 'users',
     orgs = 'orgs'
 }
+export * from './repository.enums';

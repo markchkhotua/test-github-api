@@ -1,5 +1,5 @@
-import { githubUrlBuilder } from '../src/utils/urlBuilder';
-import { repoInput, branchInput } from './mocks';
+import { githubUrlBuilder } from '../../src/utils/url-builder.utils';
+import { repoInput, branchInput } from '../mocks';
 
 describe('Testing url builder', () => {
 
@@ -10,7 +10,7 @@ describe('Testing url builder', () => {
     });
     it('Should return a proper url for branch', () => {
         const url = githubUrlBuilder.getBranchesUrl(branchInput);
-        expect(url).toEqual(`/repos/${ branchInput.entityName }/${ branchInput.repoName }/branches`);
+        expect(url).toEqual(`/repos/${ branchInput.login }/${ branchInput.repoName }/branches`);
     });
 
 });

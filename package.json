@@ -2,12 +2,13 @@
   "name": "test-github-api",
   "version": "1.0.0",
   "scripts": {
-    "test": "jest",
+    "test:unit": "jest --testPathPattern=./test/unit",
+    "test:e2e": "jest --testPathPattern=./test/e2e",
     "clean": "rm -rf ./lib",
-    "copy-files": "cp swagger.yaml lib/",
-    "build": "pnpm test && pnpm clean && npx tsc && pnpm copy-files",
+    "copy:swagger": "cp swagger.yaml lib/",
+    "build": "pnpm clean && npx tsc && pnpm copy:swagger",
     "start": "node lib/index.js",
-    "docker-build": "docker build . -t test-github-api"
+    "docker:build": "docker build . -t test-github-api"
   },
   "dependencies": {
     "axios": "^0.27.2",
@@ -33,6 +34,7 @@
     "@typescript-eslint/eslint-plugin": "^5.30.7",
     "@typescript-eslint/parser": "^5.30.7",
     "eslint": "^8.20.0",
+    "express-serve-static-core": "^0.1.1",
     "jest": "^28.1.3",
     "supertest": "^6.2.4",
     "ts-jest": "^28.0.7",

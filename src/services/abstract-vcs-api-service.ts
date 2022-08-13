@@ -1,9 +1,9 @@
 import axios, { AxiosInstance } from 'axios';
-import APIError from '../errors/APIError';
+import { ApiError } from '../errors';
 import config from '../../config';
-import type { GetUrlFunction, VCSInputData } from '../types';
+import type { AbstractGetVCSDataFunction } from '../types';
 
-abstract class AbstractVCSAPIService {
+abstract class AbstractVcsApiService {
 
     protected client: AxiosInstance;
 
@@ -15,17 +15,14 @@ abstract class AbstractVCSAPIService {
         this.client.defaults.headers.common['Accept'] = 'application/vnd.github+json';
     }
     
-    protected async getVCSData (
-        inputData: VCSInputData,
-        getUrl: GetUrlFunction
-    ) {
+    protected getVCSData: AbstractGetVCSDataFunction = async (url) => {
         try {
-            const { data } = await this.client.get(getUrl(inputData));
+            const { data } = await this.client.get(url);
             return data;
         } catch (e: any) {
-            throw new APIError(e.response.statusText, e.response.status);
+            throw new ApiError(e.response.statusText, e.response.status);
         }
-    }
+    };
 }
 
-export default AbstractVCSAPIService;
+export default AbstractVcsApiService;
