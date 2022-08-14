@@ -1,6 +1,7 @@
-import type { Repo, ReposList, ResultingRepo, ReposInput, BranchesInput } from './data.types';
+import type { Repo, ReposList, ResultingRepo, ReposInput, BranchesInput, UserInput } from './data.types';
 
 export type UrlBuilder = {
+    getUserUrl: (repoInput: UserInput) => string
     getReposUrl: (repoInput: ReposInput) => string
     getBranchesUrl: (branchesInput: BranchesInput) => string
 }

@@ -8,6 +8,5 @@ export type GithubController = (req: IReposRequest, res: Response, next: NextFun
 
 type RequestParams = {
     entityName: string,
-    entityType: string,
     page: string
 }

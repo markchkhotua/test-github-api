@@ -28,7 +28,7 @@ paths:
         - url: http://localhost:3000
     servers:
       - url: http://localhost:3000
-  /repositories/{entityType}/{entityName}:
+  /repositories/github/{entityName}:
     get:
       tags:
         - 'Get repositories'
@@ -41,16 +41,6 @@ paths:
           example: defunkt
           schema:
             type: string
-        - name: entityType
-          in: path
-          description: github entity type (users / orgs)
-          required: true
-          example: users
-          schema:
-            type: string
-            enum:
-              - users
-              - orgs
         - name: pages
           in: query
           description: amount of pages (each of 100 elements)
@@ -79,6 +69,7 @@ paths:
                   value:
                     login: defunkt
                     name: ace
+                    type: User
                     branches:
                       - name: dont-hardcode-fonts-protocol
                         sha: f1b0c0859bb10f557caa18cdd02afda482fc558a
@@ -89,7 +80,6 @@ paths:
                     name: ace
                     branches:
                       [ ]
-
         '400':
           description: Request failed because of application/json Accept header is absent
           content:
@@ -129,6 +119,7 @@ components:
         required:
           - login
           - name
+          - type
           - branches
         properties:
           login:
@@ -137,6 +128,9 @@ components:
           name:
             type: string
             example: ace
+          type:
+            type: string
+            example: User
           branches:
             type: array
             items:

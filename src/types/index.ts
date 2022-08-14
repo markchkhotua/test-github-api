@@ -2,7 +2,12 @@ export type IAppConfig = {
     port: string | number;
     accessToken: string;
     gitHubAPI: {
-        baseUrl: string
+        urls: {
+            base: string,
+            User: string,
+            Organization: string
+        }
+
     };
 }
 

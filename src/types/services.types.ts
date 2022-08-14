@@ -1,6 +1,7 @@
 import type { BranchesInput, BranchesList, ReposInput, ReposList } from './data.types';
 
 export interface IGithubAPIService {
+    getUserData: GetVCSDataFunction<ReposList, ReposInput>,
     getRepositoriesData: GetVCSDataFunction<ReposList, ReposInput>,
     getBranchesData: GetVCSDataFunction<BranchesList, BranchesInput>
 }

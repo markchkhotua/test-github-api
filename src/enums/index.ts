@@ -6,8 +6,4 @@ export enum HttpCodes {
     SERVER_ERROR = 500
 }
 
-export enum VCSEntityType {
-    users = 'users',
-    orgs = 'orgs'
-}
 export * from './repository.enums';

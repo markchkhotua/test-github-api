@@ -4,6 +4,6 @@ import { validateRequestMiddlewares } from '../middlewares';
 
 const router: Router = Router();
 
-router.get('/github/:entityType/:entityName', validateRequestMiddlewares, githubController);
+router.get('/github/:entityName', validateRequestMiddlewares, githubController);
 
 export default router;

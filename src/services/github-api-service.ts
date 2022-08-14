@@ -1,5 +1,5 @@
 import config from '../../config';
-import { BranchesInput, IGithubAPIService, ReposInput } from '../types';
+import { BranchesInput, IGithubAPIService, ReposInput, UserInput } from '../types';
 import AbstractVcsApiService from './abstract-vcs-api-service';
 import { githubUrlBuilder } from '../utils/url-builder.utils';
 
@@ -7,7 +7,7 @@ class GithubApiService extends AbstractVcsApiService implements IGithubAPIServic
     private static _instance: GithubApiService;
 
     constructor() {
-        super(config.gitHubAPI.baseUrl);
+        super(config.gitHubAPI.urls.base);
     }
 
     public static getInstance () {
@@ -16,6 +16,11 @@ class GithubApiService extends AbstractVcsApiService implements IGithubAPIServic
         }
         return this._instance;
     }
+
+    getUserData = async ({ entityName }: UserInput) => {
+        const url = githubUrlBuilder.getUserUrl({ entityName });
+        return this.getVCSData(url);
+    };
 
     getRepositoriesData = async ({ entityName, entityType, page }: ReposInput) => {
         const url = githubUrlBuilder.getReposUrl({ entityName, entityType, page });
