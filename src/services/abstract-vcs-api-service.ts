@@ -20,7 +20,8 @@ abstract class AbstractVcsApiService {
             const { data } = await this.client.get(url);
             return data;
         } catch (e: any) {
-            throw new ApiError(e.response.statusText, e.response.status);
+            throw new ApiError(e.response?.statusText
+                || e.response?.data?.message, e.response?.status);
         }
     };
 }

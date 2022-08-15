@@ -2,9 +2,11 @@ import { GithubEntityType } from '../enums';
 
 export type ReposList = Array<Repo>
 export type BranchesList = Array<Branch>
+export type ResultingBranchesList = Array<ResultingBranch>
 export type ResultingRepos = Array<ResultingRepo>;
 
-export type User = {
+export type GithubEntity = {
+    login: string,
     type: `${ GithubEntityType }`,
 }
 
@@ -24,11 +26,16 @@ export type Branch = {
     }
 }
 
+export type ResultingBranch = {
+    name: string,
+    sha: string
+}
+
 export type ResultingRepo = {
     login: string,
     name: string,
     type: `${ GithubEntityType }`,
-    branches: BranchesList
+    branches: ResultingBranchesList
 }
 
 export type UserInput = {
@@ -37,7 +44,7 @@ export type UserInput = {
 
 export type ReposInput = {
     entityName: string,
-    entityType: string,
+    entityType: `${ GithubEntityType }`,
     page: string
 }
 

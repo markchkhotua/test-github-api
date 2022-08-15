@@ -16,4 +16,6 @@ export * from './utils.types';
 export * from './services.types';
 export * from './middlewares.types';
 export * from './controllers.types';
+export * from './tests.types';
+export * from './errors.types';
 

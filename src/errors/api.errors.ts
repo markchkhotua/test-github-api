@@ -1,5 +1,5 @@
 import { HttpCodes } from '../enums';
-import type { IApiErrors } from '../types/errors.types';
+import type { IApiErrors } from '../types';
 
 class ApiErrors extends Error implements IApiErrors {
     

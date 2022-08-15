@@ -23,12 +23,13 @@ But all that is __optional__ - everything has a default value
 
 ## NPM scripts
 
-1. `test` - runs Jest tests
-2. `clean` - clears `lib` folder
-3. `copy-files` - copies swagger file for `lib` folder
-4. `build` - runs tests, compiles typescript and copies files
-5. `starts` - starts compiled NodeJS app 
-6. `docker-build` - builds DOcker container
+1. `test:unit` - runs unit tests
+2. `test:e2e` - runs end-to-end tests
+3. `clean` - clears `lib` folder
+4. `copy-files` - copies swagger file for `lib` folder
+5. `build` - runs units tests, compiles typescript and copies files
+6. `starts` - starts compiled NodeJS app 
+7. `docker-build` - builds DOcker container
 
 ## Installation
 

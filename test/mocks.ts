@@ -1,55 +1,75 @@
-import { Branch, BranchesInput, ReposInput } from '../src/types';
+import type {
+    BranchesInput,
+    ReposInput,
+    GetEntityFunction,
+    GetReposFunction, 
+    GetResultingReposFunction, 
+    Error404,
+    UserInput
+} from '../src/types';
+import { GithubEntityType } from '../src/enums';
 
-type MockBranches = {
-    [key: string]: Array<Branch>
-}
+const getEntity: GetEntityFunction = (type = GithubEntityType.USER) => (
+    {
+        login: `johndoe_${ type }`,
+        type
+    }
+);
 
-const repos = [
+const getRepos: GetReposFunction = (type = GithubEntityType.USER) => [
     {
         name: 'acts_as_textiled',
         owner: {
-            login: 'defunkt',
+            login: `johndoe_${ type }`,
+            type
         },
         fork: false
     }
 ];
-const branches = [
+
+const getResultingRepos: GetResultingReposFunction = (type = GithubEntityType.USER) => [
     {
-        name: 'master',
-        commit: {
-            sha: 'fce0e1f58f01403568bee122a256cfab1adc6b5b',
-        },
+        login: `johndoe_${ type }`,
+        name: 'acts_as_textiled',
+        type,
+        branches: [
+            {
+                name: 'master',
+                sha: 'fce0e1f58f01403568bee122a256cfab1adc6b5b',
+            }
+        ]
     }
 ];
 
-const repo = {
-    name: 'acts_as_textiled',
-    owner: {
-        login: 'defunkt',
+const branch = {
+    name: 'master',
+    commit: {
+        sha: 'fce0e1f58f01403568bee122a256cfab1adc6b5b',
     },
-    fork: false
 };
 
-const accessibleBranch: MockBranches = {
-    'acts_as_textiled': [
-        {
-            name: 'master',
-            commit: {
-                sha: 'fce0e1f58f01403568bee122a256cfab1adc6b5b',
-            },
-        }
-    ]
+const error404: Error404 = {
+    message: 'Not Found',
+    documentation_url: 'https://docs.github.com/rest/reference/users#get-a-user'
+};
+
+const branches = [
+    branch
+];
+
+const userInput: UserInput = {
+    entityName: 'test_user',
 };
 
 const repoInput: ReposInput = {
     entityName: 'test_user',
-    entityType: 'user',
-    page: 1
+    entityType: GithubEntityType.USER,
+    page: '1'
 };
 
 const branchInput: BranchesInput = {
     login: 'test_user',
-    repoName: 'test_repo'
+    name: 'test_repo'
 };
 
-export { repos, repo, repoInput, branches, branchInput, accessibleBranch };
+export { error404, branch, repoInput, userInput, branchInput, branches, getEntity, getResultingRepos, getRepos };

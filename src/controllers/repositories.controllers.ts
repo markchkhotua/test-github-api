@@ -1,9 +1,8 @@
 import { getBranchesPromises } from '../utils/repo-helper.utils';
 import { HttpCodes } from '../enums';
 import { ApiError } from '../errors';
-import config from '../../config';
 import GithubApiService from '../services/github-api-service';
-import type { GithubController, ReposList, ResultingRepos, ResultingRepoPromises, User } from '../types';
+import type { GithubController, ReposList, ResultingRepos, ResultingRepoPromises, GithubEntity } from '../types';
 
 const githubController: GithubController =
     async (req, res, next) => {
@@ -16,8 +15,7 @@ const githubController: GithubController =
 
         try {
             const githubApiService = GithubApiService.getInstance();
-            const { type }: User = await githubApiService.getUserData({ entityName });
-            const entityType: string = config.gitHubAPI.urls[type];
+            const { type: entityType }: GithubEntity = await githubApiService.getUserData({ entityName });
             const data: ReposList = await githubApiService
                 .getRepositoriesData({ entityName, entityType, page });
             const reposBranchPromises: ResultingRepoPromises = getBranchesPromises(data);
