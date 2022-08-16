@@ -1,6 +1,6 @@
 import { modifySwaggerDoc } from '../../../src/middlewares';
 import type { NextFunction, Request, Response } from 'express';
-import { IExtendedRequest } from '../../../src/types';
+import type { IExtendedRequest, SwaggerDocMock } from '../../../src/types';
 
 describe('Testing src/middlewares/swagger.middlewares.ts middleware', () => {
     let mReq: Partial<Request>;
@@ -8,7 +8,7 @@ describe('Testing src/middlewares/swagger.middlewares.ts middleware', () => {
     let mNext: NextFunction = jest.fn();
 
     it('Should call next() if receives swagger document', async () => {
-        const swaggerDoc = {
+        const swaggerDoc: SwaggerDocMock = {
             servers: [
                 { url: 'our server url' }
             ]
@@ -22,7 +22,7 @@ describe('Testing src/middlewares/swagger.middlewares.ts middleware', () => {
     });
 
     it('Should call next() if receives non-swagger document anyway', async () => {
-        const swaggerDoc = {
+        const swaggerDoc: SwaggerDocMock = {
         };
         mReq = {
         };

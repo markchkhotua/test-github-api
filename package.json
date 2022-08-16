@@ -33,6 +33,7 @@
     "@types/yamljs": "^0.2.31",
     "@typescript-eslint/eslint-plugin": "^5.30.7",
     "@typescript-eslint/parser": "^5.30.7",
+    "axios-mock-adapter": "^1.21.2",
     "eslint": "^8.20.0",
     "express-serve-static-core": "^0.1.1",
     "jest": "^28.1.3",

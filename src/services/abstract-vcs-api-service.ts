@@ -12,7 +12,7 @@ abstract class AbstractVcsApiService {
         if(config.accessToken) {
             this.client.defaults.headers.common['Authorization'] = `token ${ config.accessToken }`;
         }
-        this.client.defaults.headers.common['Accept'] = 'application/vnd.github+json';
+        // this.client.defaults.headers.common['Accept'] = 'application/vnd.github+json';
     }
     
     protected getVCSData: AbstractGetVCSDataFunction = async (url) => {

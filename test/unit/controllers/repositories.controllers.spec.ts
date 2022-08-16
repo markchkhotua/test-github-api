@@ -1,6 +1,6 @@
 import { githubController } from '../../../src/controllers';
 import type { NextFunction, Request, Response } from 'express';
-import { GithubEntity, IReposRequest, ReposList } from '../../../src/types';
+import type { GithubEntity, IReposRequest, ReposList } from '../../../src/types';
 import { ApiError } from '../../../src/errors';
 import { GithubEntityType, HttpCodes } from '../../../src/enums';
 import GithubApiService from '../../../src/services/github-api-service';
@@ -25,7 +25,7 @@ describe('src/controllers/repositories.ts', () => {
     });
     
     it('Should return 404 if user not found', async () => {
-        const notFoundError = new ApiError('Not found', HttpCodes.NOT_FOUND);
+        const notFoundError: ApiError = new ApiError('Not found', HttpCodes.NOT_FOUND);
         jest.spyOn(GithubApiService.getInstance(), 'getUserData')
             .mockImplementation(() => {
                 throw notFoundError;

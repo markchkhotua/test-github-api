@@ -3,7 +3,7 @@ export interface IApiErrors {
     status: number
 }
 
-type ErrorResponseObject = {
+export type ErrorResponseObject = {
     status: number,
     Message: string
 };
